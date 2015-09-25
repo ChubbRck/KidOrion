@@ -11,7 +11,7 @@ p = {
 	baseaccel = .1, -- was .1
 	vel = {x = 0, y = 0},
 	bounce = 0.4 ,
-	score = 4312,
+	score = 0,
 	landingthreshold = 0.5,
 	maxvel = 3, -- was 2
 	rot = 0,
@@ -842,8 +842,8 @@ p.fuel = 50
 p.dead = false
 p.atgoal = false
 p.canmove = true
-p.hasitem = true
-p.hascannon = true
+p.hasitem = false
+p.hascannon = false
 end
 
 function resetmsgs()

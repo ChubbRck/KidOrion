@@ -1,7 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 4
 __lua__
-state = 1
+state = 10
 p = {
 	accel = {x = 0, y = 0},
 	x = 60, --64,
@@ -11,7 +11,7 @@ p = {
 	baseaccel = .1, -- was .1
 	vel = {x = 0, y = 0},
 	bounce = 0.4 ,
-	score = 0,
+	score = 1000,
 	landingthreshold = 0.5,
 	maxvel = 3, -- was 2
 	rot = 0,
@@ -818,6 +818,7 @@ p.atgoal = false
 levelcounter += 1
 if levelcounter == 6 then
 state = 10
+g.marktimer = g.timer
 else
 clevel = levels[levelcounter]
 cls()
@@ -1199,39 +1200,49 @@ function _draw()
 	 	cam.x = 0
 	 	cam.y = 0
 	 	drawbg()
-	 	color(7)
+	 	color(2 + g.timer % 11)
+	 	g.timer = g.timer + .3
 	 	cursor(38,24)
 	 	print ("congratulations!")
-	 	
+	 	if g.timer - g.marktimer > 10 then
+	 	color(7)
 	 	cursor(14,44)
 	 	print("base score:")
-	 	cursor(14,54)
-	 	print("lives left: " .. p.lives)
-	 	line(14,64,112,64,7)
-	 	
-	 	
 	 	if (p.score >= 1000) then
 	 	cursor(94,44)
 	 	else 
 	 	cursor(98,44)
 	 	end
 	 	print(p.score .. "0")
+	 	end
+	 	if g.timer - g.marktimer > 20 then
+	 	cursor(14,54)
+	 	print("lives left: " .. p.lives)
 	 	
+	 	
+	 	if g.timer - g.marktimer > 30 then
+	 	line(14,64,112,64,7)
+	 	end
 	 	cursor(98,54)
-	 	local livesbonus = (p.lives * 2000)
-	 	print(livesbonus)
-	 	
+	
+	 	print(p.lives * 2000)
+	 	end
+	 	if g.timer - g.marktimer > 40 then
 	 	cursor(14,74)
 	 	print("final score:")
 	 	
 	 	cursor(94,74)
-	 	print((p.score + livesbonus/10) .. "0")
-	 
+	 	print((p.score + (p.lives * 2000)/10) .. "0")
+	 	end
+	 	if g.timer - g.marktimer > 50 then
  		cursor(14,94)
  		print ("your rank:")
- 		
- 		cursor (64, 94)
- 		print("one bad dude")
+ 		end
+ 		if g.timer - g.marktimer > 70 then
+ 		local fs = generaterank(p.score + (p.lives * 2000)/10)
+ 		cursor (116-(#fs*4), 94)
+ 		print(fs)
+ 		end
 	 end
 	if state == 2 then
 						
@@ -1291,6 +1302,23 @@ function _draw()
 	
 end
 
+function generaterank(finalscore)
+
+if finalscore > 4000 then
+return "star of stars"
+elseif finalscore > 3500 then
+return "real hero"
+elseif finalscore > 3000 then
+return "quite solid"
+elseif finalscore > 2000 then
+return "journeyman"
+elseif finalscore > 1000 then
+return "satisfactory"
+else
+return "space guppy"
+end
+
+end
 function drawintro()
 if levelcounter == 1 and p.canmove then
 	 	cursor(15,-96)
@@ -1316,7 +1344,7 @@ if levelcounter == 1 and p.canmove then
 	 	print("advamce")
 	 	
 	 
-	 end
+	 end   
 end
 __gfx__
 00666600000000000000000000bbbb00000888806666666600055000000660005555555500eeee0088888888aaa11111111aaaaa650000008080808000000000

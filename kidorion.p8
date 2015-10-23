@@ -451,6 +451,7 @@ function managemovement()
 				if (sgn(p.vel.y)) ~= (sgn(oldvely)) then
 				if (checkwall(p.x+4,p.y+8+.1))then
 				p.landed = true
+				p.rot = 0
 				p.vel.y = 0
 				p.vel.x = 0
 				checkgoal(p.x, p.y)

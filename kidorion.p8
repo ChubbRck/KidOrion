@@ -862,6 +862,7 @@ resetplayer()
 state = 1
 p.lives = 3
 levelcounter = 1
+p.score = 0
 clevel = level1
 --replace this with a loop
 
@@ -1243,6 +1244,9 @@ function _draw()
  		cursor (116-(#fs*4), 94)
  		print(fs)
  		end
+ 		if g.timer - g.marktimer > 200 then
+	 	restart()
+	 	end
 	 end
 	if state == 2 then
 						
@@ -1317,6 +1321,7 @@ return "satisfactory"
 else
 return "space guppy"
 end
+
 
 end
 function drawintro()

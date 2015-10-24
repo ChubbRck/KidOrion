@@ -29,6 +29,15 @@ p = {
 	hascannon = false
 }
 
+spaceram = {
+x = 60,
+y = 0,
+velx = 0,
+vely = 0,
+accelx = .1,
+accely = 0
+}
+
 itemcache = {}
 bullets = {}
 phrases = {
@@ -580,6 +589,7 @@ function _update()
 		foreach(scorebursts, move_part)
 		foreach(gasblobs, move_part)
 		foreach(bullets, move_part)
+		updatespaceram()
 		if p.canmove then
 		
 			if levelcounter == 4 then
@@ -1088,6 +1098,7 @@ function runmessage(msgcol)
 end
 
 function drawhud()
+print("hihihi")
 	rectfill(cam.x, 128-58+cam.y, cam.x +16, cam.y+128, 0)
 		cursor(1+cam.x, 128-56+cam.y)
 		color(3)
@@ -1108,6 +1119,7 @@ function drawhud()
 		print(scorestring)
 		else
 		print("score:")
+		--print(spaceram.accelx)
 		end
 		cursor(cam.x+124, cam.y)
 		print("0")
@@ -1285,9 +1297,58 @@ function _draw()
 	 --pset(p.x+8, p.y+8, 15)
 	 foreach(parts,draw_part)
 	 foreach(scorebursts,draw_sbs)
+	 drawspaceram()
 	 drawhud()
 	end
 	
+end
+
+function updatespaceram()
+	spaceram.velx = spaceram.velx + spaceram.accelx
+	spaceram.vely = spaceram.vely + spaceram.accely
+	--spaceram.velx = 1 + spaceram.accelx
+	spaceram.x = spaceram.x + spaceram.velx
+	spaceram.y = spaceram.y + spaceram.vely
+	local dist = abs(p.x - spaceram.x) + abs(p.y - spaceram.y)
+	
+if dist < 10000 then
+	 -- seek
+	 if spaceram.x > p.x then
+	 spaceram.accelx = -.01
+	 --spaceram.velx = 2
+	 else 
+	 spaceram.accelx = .01
+	 end	
+	end
+ 	-- if spaceram is near player, move toward him
+ 	-- otherwise, if spaceram is too far from original location, head back
+ 	-- otherwise, wander randomly 
+end
+function drawspaceram()
+if spaceram.accelx < 0 then
+	spr(66,spaceram.x, spaceram.y,2,2, true)
+else
+ spr(66,spaceram.x, spaceram.y,2,2)
+end
+end
+
+function generaterank(finalscore)
+
+if finalscore > 4000 then
+return "star of stars"
+elseif finalscore > 3500 then
+return "real hero"
+elseif finalscore > 3000 then
+return "quite solid"
+elseif finalscore > 2000 then
+return "journeyman"
+elseif finalscore > 1000 then
+return "satisfactory"
+else
+return "space guppy"
+end
+
+
 end
 
 function drawintro()

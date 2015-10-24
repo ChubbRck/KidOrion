@@ -1101,7 +1101,7 @@ function runmessage(msgcol)
 end
 
 function drawhud()
-print("hihihi")
+
 	rectfill(cam.x, 128-58+cam.y, cam.x +16, cam.y+128, 0)
 		cursor(1+cam.x, 128-56+cam.y)
 		color(3)

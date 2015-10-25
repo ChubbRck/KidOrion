@@ -294,7 +294,7 @@ gasblobs = {}
 levelcounter = 1
 paltimer = 1
 clevel = levels[levelcounter]
-clevel = level1
+--clevel = level1
 
 function storeitem(tile,locx,locy)
 local item = {
@@ -323,19 +323,15 @@ mset(flr((x-clevel.offset.x)/8)+clevel.origin.x,flr((y-clevel.offset.y)/8)+cleve
 mset(x,y,t)
 end
 end
-function resetcamera()
-camera(0,0)
-end
+
 function lerp(a,b,t)
 	return (1-t)*a+t*b
 end
 
 function runtitlescreen()
 paltimer +=1
-	 if (btnp(4)) then
-	 	cls()
-	 	state = 1.5
-	 end
+	 if (btnp(4)) cls() state = 1.5
+	 
 
 	 -- add to string
 	 
@@ -379,22 +375,18 @@ function checkinput()
 			p.energy += .5
 			end
 		g.spritethruster = 4
-			if not p.landed then
-				p.accel.y = g.gravity
-				p.accel.x = 0
-			end
+			if (not p.landed) p.accel.y = g.gravity p.accel.x = 0
+			
 		end
 	
 		if (btn(0)) then
 			--p.accel.x = -.01
-			if not p.landed then
-				p.rot += 0.03125
-			end
+			if (not p.landed) p.rot += 0.03125
+			
 		elseif (btn(1)) then
 			--p.accel.x = .01
-			if not p.landed then
-			p.rot -= .03125
-			end
+			if (not p.landed) p.rot -= .03125
+	
 		else
 			--p.accel.x = 0
 		end
@@ -676,7 +668,8 @@ function _update()
 		end
 	end
 	if state == 2.5 then
-	resetcamera()	
+	camera(0,0)
+	
 	if (btnp(4)) then
 	 	cls()
 	 	resetplayer()
@@ -811,7 +804,7 @@ for i=1,30 do
 end
 function nextlevel()
 resetmsgs()
-resetcamera()
+camera(0,0)
 resetplayer()
 restoreitems()
 clearcache()
@@ -1320,21 +1313,52 @@ function _draw()
 end
 
 function updatespaceram()
-	spaceram.velx = spaceram.velx + spaceram.accelx
-	spaceram.vely = spaceram.vely + spaceram.accely
+	spaceram.velx += spaceram.accelx
+	spaceram.vely += spaceram.accely
+	
+	if spaceram.velx > 1 then 
+		spaceram.velx = 1
+		end
+		if spaceram.velx < -1 then 
+		spaceram.velx = -1
+		end
+		if spaceram.vely > 1 then 
+		spaceram.vely = 1
+		end
+		if spaceram.vely < -1 then 
+		spaceram.vely = -1
+		end
 	--spaceram.velx = 1 + spaceram.accelx
-	spaceram.x = spaceram.x + spaceram.velx
-	spaceram.y = spaceram.y + spaceram.vely
+	spaceram.x += spaceram.velx
+	spaceram.y += spaceram.vely
 	local dist = abs(p.x - spaceram.x) + abs(p.y - spaceram.y)
 	
-if dist < 10000 then
+if dist < 100 then
 	 -- seek
 	 if spaceram.x > p.x then
-	 spaceram.accelx = -.01
+	 spaceram.accelx = -.03
 	 --spaceram.velx = 2
 	 else 
-	 spaceram.accelx = .01
+	 spaceram.accelx = .03
 	 end	
+	 
+	 if spaceram.y > p.y then
+	 spaceram.accely = -.04
+	 --spaceram.velx = 2
+	 else 
+	 spaceram.accely = .04
+	 end	
+	else
+	
+	local ch1 = flr(rnd(3))-1
+	local ch2 = flr(rnd(3))-1
+	
+		if g.timer - g.marktimer >= 2 then
+		spaceram.accelx = ch1 * rnd(.005)
+		spaceram.accely = ch2 * rnd(.005)
+  g.marktimer = g.timer	
+
+	end
 	end
  	-- if spaceram is near player, move toward him
  	-- otherwise, if spaceram is too far from original location, head back
@@ -1374,21 +1398,21 @@ if levelcounter == 1 and p.canmove then
 	 	cursor(15,-90)
 	 	print("extra fuel")
 	 	
-	 	cursor(120,-126)
-	 	color(13)
-	 	print("gems are") 
-	 	cursor(120,-120)
-	 	print("bonus points")
+	-- 	cursor(120,-126)
+	-- 	color(13)
+	-- 	print("gems are") 
+	 --	cursor(120,-120)
+	-- 	print("bonus points")
 	 	
-	 	cursor(44,-180)
-	 	print("get energy") 
-	 	cursor(48,-174)
-	 	print("to boost")
+	 --	cursor(44,-180)
+	 --	print("get energy") 
+	 --	cursor(48,-174)
+	 --	print("to boost")
 	 	
-	 	cursor(50,-300)
-	 	print("land to") 
-	 	cursor(50,-294)
-	 	print("advamce")
+	 --	cursor(50,-300)
+	 	--print("land to") 
+	 	--cursor(50,-294)
+	 	--print("advamce")
 	 	
 	 
 	 end   

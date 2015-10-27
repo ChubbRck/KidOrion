@@ -30,12 +30,13 @@ p = {
 }
 
 spaceram = {
-x = 60,
-y = 0,
+x = 75,
+y = -350,
 velx = 0,
 vely = 0,
-accelx = .1,
-accely = 0
+accelx = 0,
+accely = 0,
+mode = 1
 }
 
 itemcache = {}
@@ -97,7 +98,9 @@ cam = {
 --}
 
 finalmsg = {
-m= {"b","e","w","a","r","e"," ","t","h","e"," ","s","p","a","c","e"," ","r","a","m","!" },
+
+	m = "beware the space ram!",
+	mmax = 21,
 	mcount = 0,
 	timer=0,
 	buffer = 1
@@ -105,58 +108,73 @@ m= {"b","e","w","a","r","e"," ","t","h","e"," ","s","p","a","c","e"," ","r","a",
 }
 
 spiralmsg = {
-m= {"w","a","r","n","i","n","g","!"  },
+--m= {"w","a","r","n","i","n","g","!"  },
+m = "warning!",
+mmax = 8,
 	mcount = 0,
 	timer=0,
 	buffer = .5
 }
 spiralmsg2 = {
-m= {"y","o","u","r"," ","f","u","e","l"," ","t","a","n","k"," ","i","s"," ","l","e","a","k","i","n","g","!"  },
+--m= {"y","o","u","r"," ","f","u","e","l"," ","t","a","n","k"," ","i","s"," ","l","e","a","k","i","n","g","!"  },
+	m = "your fuel tank is leaking!",
+	mmax = 26,
 	mcount = 0,
 	timer=0,
-	buffer = 1
+buffer = 1
 }
 
+
 climbmsg2 = {
-m= {"g","r","a","v","i","t","y"," ","i","s"," ","t","w","i","c","e"," ","a","s"," ","s","t","r","o","n","g" },
-	mcount = 0,
+m= "gravity is twice as strong",	
+mmax = 26,
+mcount = 0,
 	timer=0,
 	buffer = .1
 }
 climbmsg3 = {
-m= {"o","n"," ","t","h","i","s"," ","p","l","a","n","e","t","!" },
+m = "on this planet!",
+	mmax = 15,
 	mcount = 0,
 	timer=0,
 	buffer = .5
 }
 intromsg ={
-	m= {"k", "i", "d", " ", "o", "r", "i", "o", "n", ","," ", "d", "o"," ", "y", "o", "u"," ", "r", "e","a", "d"," ", "m", "e", "?"  },
+	m= "kid orion, do you read me?",
+	mmax = 26,
 	mcount = 0,
 	timer=0,
 	buffer = 1
 }
 intromsg2 = {
-	m= {"t","h","i","s"," ","i","s"," ","b","a","b","y"," ","h","e","r","b","e","r","t"},
+	--m= {"t","h","i","s"," ","i","s"," ","b","a","b","y"," ","h","e","r","b","e","r","t"},
+	m = "this is baby herbert.",
+	mmax = 21,
 	mcount = 0,
 	timer=0,
 	buffer = 1
 }
 
 intromsg3 = {
-	m= {"i","'","m"," ","s","t","r","a","n","d","e","d"," ","i","n"," ","d","i","m","e","n","s","i","o","n"," ","z"},
+	m = "i'm stranded in dimension z",
+	mmax = 28,
 	mcount = 0,
 	timer=0,
 	buffer = 0.25
 }
 
 intromsg4 = {
-	m= {"i"," ","d","o","n","'","t"," ","h","a","v","e"," ","m","u","c","h"," ","t","i","m","e"," ","l","e","f","t","."},
+	--m= {"i"," ","d","o","n","'","t"," ","h","a","v","e"," ","m","u","c","h"," ","t","i","m","e"," ","l","e","f","t","."},
+	m = "i don't have much time left.",
+	mmax = 27,
 	mcount = 0,
 	timer=0,
 	buffer = 1
 }
 intromsg5 = {
-	m= {"h", "e","l","p"," ","m","e"," ","k","i","d"," ","o","r","i","o","n","!"},
+	--m= {"h", "e","l","p"," ","m","e"," ","k","i","d"," ","o","r","i","o","n","!"},
+	m = "help me kid orion!",
+	mmax = 18,
 	mcount = 0,
 	timer=0,
 	buffer = 1
@@ -192,7 +210,8 @@ g = {
 	gravity = 0.04,
 	backgroundcounter = 1,
 	timer = 0,
-	marktimer = 0
+	marktimer = 0,
+	srtimer = 0
 }
 level1={
 	origin = {x=0,y=0},
@@ -294,7 +313,7 @@ gasblobs = {}
 levelcounter = 1
 paltimer = 1
 clevel = levels[levelcounter]
---clevel = level1
+clevel = level5
 
 function storeitem(tile,locx,locy)
 local item = {
@@ -582,7 +601,9 @@ function _update()
 		foreach(scorebursts, move_part)
 		foreach(gasblobs, move_part)
 		foreach(bullets, move_part)
+		if levelcounter == 5 then
 		updatespaceram()
+		end
 		if p.canmove then
 		
 			if levelcounter == 4 then
@@ -1052,7 +1073,7 @@ function runmessage(msgcol)
  local mk = msgcol.marker
  local msg = msgcol.msgs[mk]
 	if msg then
-	local scursor = flr((128 - (#msg.m * 4.25))/2)
+	local scursor = flr((128 - (msg.mmax * 4.25))/2)
  --local scursor =4
 	if mk == 1 and msg.mcount == 1 then
 		rectfill(0,38,128,82,6)
@@ -1065,16 +1086,16 @@ function runmessage(msgcol)
 --end)
 	msg.timer = msg.timer +1
 	if (msg.timer % 3 == 0) then
-		cursor(scursor + msg.mcount*4,58)
-		if (not not msg.m[msg.mcount]) then
-			print(msg.m[msg.mcount])
+		--cursor(scursor + msg.mcount*4,58)
+		if (msg.mcount<msg.mmax) then
+			print(msg.m)
 			--print(#msgcol.msgs)
 			sfx(3)
 		end
 		msg.mcount = msg.mcount + 1
 
 	end
-	if msg.mcount >= #msg.m + 30*msg.buffer then
+	if msg.mcount >= msg.mmax + 30*msg.buffer then
 		cls()
 		rectfill(0,38,128,82,6)
 				rectfill(2,40,125,80,3)
@@ -1306,13 +1327,16 @@ function _draw()
 	 --pset(p.x+8, p.y+8, 15)
 	 foreach(parts,draw_part)
 	 foreach(scorebursts,draw_sbs)
+	 if levelcounter == 5 then
 	 drawspaceram()
+	 end
 	 drawhud()
 	end
 	
 end
 
 function updatespaceram()
+
 	spaceram.velx += spaceram.accelx
 	spaceram.vely += spaceram.accely
 	
@@ -1331,10 +1355,27 @@ function updatespaceram()
 	--spaceram.velx = 1 + spaceram.accelx
 	spaceram.x += spaceram.velx
 	spaceram.y += spaceram.vely
+--check for collision with player
+if abs((spaceram.x + 8)-(p.x + 4)) < 12 and abs((spaceram.y + 8)-(p.y + 4)) < 12 then
+--compare positions
+if spaceram.x + 8 > p.x + 4 then
+p.vel.x = -3
+else 
+p.vel.x = 3
+end
+
+if spaceram.y + 8 > p.y + 4 then
+p.vel.y = -3
+else 
+p.vel.y = 3
+end
+
+end
 	local dist = abs(p.x - spaceram.x) + abs(p.y - spaceram.y)
 	
-if dist < 100 then
+if dist < 50 then
 	 -- seek
+	 spaceram.mode = 1
 	 if spaceram.x > p.x then
 	 spaceram.accelx = -.03
 	 --spaceram.velx = 2
@@ -1350,13 +1391,17 @@ if dist < 100 then
 	 end	
 	else
 	
-	local ch1 = flr(rnd(3))-1
-	local ch2 = flr(rnd(3))-1
-	
-		if g.timer - g.marktimer >= 2 then
-		spaceram.accelx = ch1 * rnd(.005)
-		spaceram.accely = ch2 * rnd(.005)
-  g.marktimer = g.timer	
+	--local ch1 = flr(rnd(3))-1
+	--local ch2 = flr(rnd(3))-1
+	spaceram.mode = 2
+	spaceram.accelx = 0
+	spaceram.accely = 0
+		if g.timer - g.srtimer >= 2 then
+		--spaceram.accelx = ch1 * rnd(.005)
+		--spaceram.accely = ch2 * rnd(.005)
+  spaceram.velx=cos(g.timer)/5
+  spaceram.vely=cos(g.timer)/5
+  g.srtimer = g.timer	
 
 	end
 	end
@@ -1365,10 +1410,18 @@ if dist < 100 then
  	-- otherwise, wander randomly 
 end
 function drawspaceram()
+if spaceram.mode == 1 then
 if spaceram.accelx < 0 then
 	spr(66,spaceram.x, spaceram.y,2,2, true)
 else
  spr(66,spaceram.x, spaceram.y,2,2)
+end
+else
+if spaceram.velx < 0 then
+	spr(66,spaceram.x, spaceram.y,2,2, true)
+else
+ spr(66,spaceram.x, spaceram.y,2,2)
+end
 end
 end
 

@@ -26,7 +26,7 @@ p = {
 	dead = false,
 	atgoal = false,
 	hasitem = false,
-	hascannon = false
+	hascannon = true
 }
 
 spaceram = {
@@ -36,7 +36,9 @@ velx = 0,
 vely = 0,
 accelx = 0,
 accely = 0,
-mode = 1
+mode = 1,
+health = 5,
+hurt = false
 }
 
 itemcache = {}
@@ -310,7 +312,7 @@ pylon1, pylon2, pylon3, pylon4, pylon5, pylon6, pylon7, pylon8
 
 gasblobs = {}
 
-levelcounter = 1
+levelcounter = 5
 paltimer = 1
 clevel = levels[levelcounter]
 clevel = level5
@@ -530,11 +532,11 @@ add(dest,part)
 return part
 end
 
-function explode()
+function explode(locx,locy)
 -- create a bunch of particles
 
  for i=1,16 do
-     np=create_part(p.x,p.y, parts, 100)
+     np=create_part(locx,locy, parts, 100)
       
      np.vel.x = cos(i/16)*2
      np.vel.y = sin(i/16)*2
@@ -677,7 +679,7 @@ function _update()
 		p.dead = true
 		g.marktimer = g.timer
 			if p.fuel >= 0 then
-				explode()
+				explode(p.x,p.y)
 			else
 			-- fuel out
 			end
@@ -746,18 +748,21 @@ if pt.isbullet then
 	if itemtile == 47 then
 	cleartile(pt.x, pt.y)
 	del (bullets, pt)
-	else if fget(itemtile,7) then
+	elseif fget(itemtile,7) then
 	del (bullets, pt)
+	elseif spaceram.health > 0 and pt.x > spaceram.x and pt.x < spaceram.x+16 and pt.y > spaceram.y and pt.y < spaceram.y + 16 then
+	del (bullets, pt)
+	spaceram.health -= 1
+	spaceram.hurt = true
+	if spaceram.health == 0 then
+	explode(spaceram.x, spaceram.y)
 	end
 end
 end
 end
 function draw_bullets(b)
-pset(b.x, b.y,7)
-pset(b.x+1,b.y,7)
-pset(b.x-1,b.y,7)
-pset(b.x,b.y-1,7)
-pset(b.x,b.y+1,7)
+line(b.x-1,b.y,b.x+1,b.y,7)
+line(b.x,b.y-1,b.x,b.y+1,7)
 end
 function draw_gbs(gb)
 pset(gb.x, gb.y,3)
@@ -869,7 +874,7 @@ p.dead = false
 p.atgoal = false
 p.canmove = true
 p.hasitem = false
-p.hascannon = false
+p.hascannon = true
 end
 
 function resetmsgs()
@@ -1336,7 +1341,7 @@ function _draw()
 end
 
 function updatespaceram()
-
+	if spaceram.health > 0 then
 	spaceram.velx += spaceram.accelx
 	spaceram.vely += spaceram.accely
 	
@@ -1372,28 +1377,44 @@ end
 
 end
 	local dist = abs(p.x - spaceram.x) + abs(p.y - spaceram.y)
-	
+	local disttohome = abs(75 - spaceram.x) + abs(-350 - spaceram.y)
+	local targetx
+	local targety
 if dist < 50 then
+spaceram.mode = 1
+targetx = p.x
+targety = p.y
+elseif disttohome > 100 then
+spaceram.mode = 1
+targetx = 75
+targety = -350
+else 
+spaceram.mode = 2
+end
+
 	 -- seek
-	 spaceram.mode = 1
-	 if spaceram.x > p.x then
+	 if (spaceram.mode == 1) then
+	 if spaceram.x > targetx then
 	 spaceram.accelx = -.03
 	 --spaceram.velx = 2
 	 else 
 	 spaceram.accelx = .03
 	 end	
 	 
-	 if spaceram.y > p.y then
+	 if spaceram.y > targety then
 	 spaceram.accely = -.04
 	 --spaceram.velx = 2
 	 else 
 	 spaceram.accely = .04
 	 end	
+	
+	
+	
 	else
 	
 	--local ch1 = flr(rnd(3))-1
 	--local ch2 = flr(rnd(3))-1
-	spaceram.mode = 2
+	
 	spaceram.accelx = 0
 	spaceram.accely = 0
 		if g.timer - g.srtimer >= 2 then
@@ -1409,20 +1430,28 @@ if dist < 50 then
  	-- otherwise, if spaceram is too far from original location, head back
  	-- otherwise, wander randomly 
 end
+end
 function drawspaceram()
+local sprite = 66
+if spaceram.hurt then
+sprite = 108
+end
+if spaceram.health > 0 then
 if spaceram.mode == 1 then
 if spaceram.accelx < 0 then
-	spr(66,spaceram.x, spaceram.y,2,2, true)
+	spr(sprite,spaceram.x, spaceram.y,2,2, true)
 else
- spr(66,spaceram.x, spaceram.y,2,2)
+ spr(sprite,spaceram.x, spaceram.y,2,2)
 end
 else
 if spaceram.velx < 0 then
-	spr(66,spaceram.x, spaceram.y,2,2, true)
+	spr(sprite,spaceram.x, spaceram.y,2,2, true)
 else
- spr(66,spaceram.x, spaceram.y,2,2)
+ spr(sprite,spaceram.x, spaceram.y,2,2)
 end
 end
+end
+spaceram.hurt = false
 end
 
 function generaterank(finalscore)
@@ -1614,8 +1643,8 @@ __map__
 0a31313131313131313131313131310a61013131323232320a3100320a311731310a3232323232323232323232323232323232323232320a0a3f3131313f3f183131313131313131181818181818180a0a16162c2c2c313131313131313131312c2c2c2c2c2c2c2c31313131313131313131313131311c1c1c1c1c1c1010312c
 0a31313131313131313131313131310a20613131313232310a3100320a0a0a32310a3232323232323232323232323232323232323232320a0a3f0d31313131313131313131313131311818181818180a0a16162c2c2c2c2c3131313131313131312c2c2c2c2c2c2c2c31313131313131313131313131313131313c000010312c
 0a31163131313131313131313108310a20613131313232310a31003231313132310a3232323232323232323232323232323232323232320a0a183f32313131313131313131313131313f3f3f3f3f180a0a1616312c2c2c2c31313131313131313131312c2c2c2c2c2c3131313131313131313c3131313131313110000031312c
-0a0a0a0a31313131313131310a0a0a0a20313131313232310a31003231313132310a3232323232323232323232323232323232313232320a0a18183f32313131313131313131313131313131313f180a0a313131312c2c2c3131313131313131313131312c2c2c2c2c31313131314243313131313d3132313131313d0031312c
-3f3f3f3f31313131313131313f3f3f3f31013232323232310a31000a0a0a0a0a0a0a3131323232323232323232323232323232323232320a0a1818183f313131313131313131313131313131313f180a0a31313131312c2c2c2c313131313131313131312c2c2c2c3131313131315253313131313131313d313131000031312c
+0a0a0a0a31313131313131310a0a0a0a20313131313232310a31003231313132310a3232323232323232323232323232323232313232320a0a18183f32313131313131313131313131313131313f180a0a313131312c2c2c3131313131313131313131312c2c2c2c2c31313131313131313131313d3132313131313d0031312c
+3f3f3f3f31313131313131313f3f3f3f31013232323232310a31000a0a0a0a0a0a0a3131323232323232323232323232323232323232320a0a1818183f313131313131313131313131313131313f180a0a31313131312c2c2c2c313131313131313131312c2c2c2c3131313131313131313131313131313d313131000031312c
 3f3f3f3f31313131313131313f3f3f3f31013232323232310a310a0a3132323232323131313f3f05053f3f3232323232323232313232320a0a18181831313131313131313131313131313108313f180a0a2f2f2f2f2f2f2f2c19313131312c31313131312c2c2c2c31313131313c31313131313131313110313131000031312c
 3f3f3f3f00313131313131313f3f3f3f31013232323232320a0a0a0a3132323232323132323f323232313f3232323232323232313132320a0a1818313131313131310a0a3131313131313f3f3f3f180a0a313131313131313119313131312c31313131312c2c2c31313131313131313131313c3131313110313d313d3131312c
 3f3f3f3f00000731310731313f3f3f3f01013232323232320a0a0a313132323232323132323f313232313f3232323232323232323132320a0a183131310731313131313131313131313118181818180a0a313131313131313119310d07312c313131312c2c2c313131313131313131313131313131313110103131003131312c

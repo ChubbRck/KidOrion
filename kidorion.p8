@@ -504,7 +504,17 @@ function limit()
 		p.energy = 50
 	end
 end
-
+function resetspaceram()
+spaceram.x = 75
+spaceram.y = -350
+spaceram.velx = 0
+spaceram.vely = 0
+spaceram.accelx = 0
+spaceram.accely = 0
+spaceram.mode = 1
+spaceram.health = 5
+spaceram.hurt = false
+end
 function create_star()
 
 local star = {}
@@ -793,6 +803,7 @@ end
 function loselife()
 p.lives -= 1
 restoreitems()
+resetspaceram()
 	if p.lives < 0 then
 		gameover()
 	else
@@ -888,6 +899,7 @@ end
 end
 function restart()
 resetplayer()
+resetspaceram()
 state = 1
 p.lives = 3
 levelcounter = 1
@@ -1376,11 +1388,11 @@ p.vel.y = 3
 end
 
 end
-	local dist = abs(p.x - spaceram.x) + abs(p.y - spaceram.y)
-	local disttohome = abs(75 - spaceram.x) + abs(-350 - spaceram.y)
+	local dist = abs(p.x +4 - spaceram.x+8) + abs(p.y+4 - spaceram.y+8)
+	local disttohome = abs(75 - spaceram.x+8) + abs(-350 - spaceram.y+8)
 	local targetx
 	local targety
-if dist < 50 then
+if dist < 100 then
 spaceram.mode = 1
 targetx = p.x
 targety = p.y

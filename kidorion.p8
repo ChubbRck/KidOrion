@@ -75,7 +75,7 @@ scorebursts = {}
 parts = {}
 
 mcount = 1
-
+pyc = 1
 sp1 = {43,6}
 sp2 = {6,43}
 
@@ -269,46 +269,54 @@ level5
 }
 pylon1 = {
 x = 6,
-y = 6,
-c = 1
+y = 6
 }
 pylon2 = {
 x=9,
-y=6,
-c=1
+y=6
 }
 pylon3 = {
 x=38,
-y=17,
-c=1
+y=17
 }
 pylon4 = {
 x=41,
-y=17,
-c=1
+y=17
 }
 pylon5 = {
 x = 10,
-y = 54,
-c = 1
+y = 54
 }
 pylon6 = {
 x = 5,
-y = 54,
-c = 1
+y = 54
+}
+pylon5a = {
+x = 35,
+y = 48
+}
+pylon6a = {
+x = 37,
+y = 48
 }
 pylon7 = {
 x = 58,
-y = 3,
-c = 1
+y = 3
 }
 pylon8 = {
 x = 62,
-y = 3,
-c = 1
+y = 3
+}
+pylon9 = {
+x = 118,
+y = 6
+}
+pylon10 = {
+x = 123,
+y = 6
 }
 pylons = {
-pylon1, pylon2, pylon3, pylon4, pylon5, pylon6, pylon7, pylon8
+pylon1, pylon2, pylon3, pylon4, pylon5, pylon6, pylon7, pylon5a, pylon6a,pylon8,pylon9,pylon10
 }
 
 gasblobs = {}
@@ -566,11 +574,13 @@ function animatepylons()
 mset(6,6,53)
 for py in all(pylons) do
 
-mset(py.x,py.y,51+flr(py.c))
+mset(py.x,py.y,51+flr(pyc))
 
-py.c +=.1
-py.c = py.c % 3
+--py.c +=.1
+--py.c = py.c % 3
 end
+pyc += .1
+pyc = pyc % 3
 end
 function _update()
 	g.timer += .1

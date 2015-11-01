@@ -29,6 +29,19 @@ p = {
 	hascannon = false
 }
 
+
+spaceram = {
+x = 75,
+y = -350,
+velx = 0,
+vely = 0,
+accelx = 0,
+accely = 0,
+mode = 1,
+health = 5,
+hurt = false
+}
+
 itemcache = {}
 bullets = {}
 phrases = {
@@ -62,7 +75,7 @@ scorebursts = {}
 parts = {}
 
 mcount = 1
-
+pyc = 1
 sp1 = {43,6}
 sp2 = {6,43}
 
@@ -88,7 +101,9 @@ cam = {
 --}
 
 finalmsg = {
-m= {"b","e","w","a","r","e"," ","t","h","e"," ","s","p","a","c","e"," ","r","a","m","!" },
+
+	m = "beware the space ram!",
+	mmax = 21,
 	mcount = 0,
 	timer=0,
 	buffer = 1
@@ -96,58 +111,73 @@ m= {"b","e","w","a","r","e"," ","t","h","e"," ","s","p","a","c","e"," ","r","a",
 }
 
 spiralmsg = {
-m= {"w","a","r","n","i","n","g","!"  },
+--m= {"w","a","r","n","i","n","g","!"  },
+m = "warning!",
+mmax = 8,
 	mcount = 0,
 	timer=0,
 	buffer = .5
 }
 spiralmsg2 = {
-m= {"y","o","u","r"," ","f","u","e","l"," ","t","a","n","k"," ","i","s"," ","l","e","a","k","i","n","g","!"  },
+--m= {"y","o","u","r"," ","f","u","e","l"," ","t","a","n","k"," ","i","s"," ","l","e","a","k","i","n","g","!"  },
+	m = "your fuel tank is leaking!",
+	mmax = 26,
 	mcount = 0,
 	timer=0,
-	buffer = 1
+buffer = 1
 }
 
+
 climbmsg2 = {
-m= {"g","r","a","v","i","t","y"," ","i","s"," ","t","w","i","c","e"," ","a","s"," ","s","t","r","o","n","g" },
-	mcount = 0,
+m= "gravity is twice as strong",	
+mmax = 26,
+mcount = 0,
 	timer=0,
 	buffer = .1
 }
 climbmsg3 = {
-m= {"o","n"," ","t","h","i","s"," ","p","l","a","n","e","t","!" },
+m = "on this planet!",
+	mmax = 15,
 	mcount = 0,
 	timer=0,
 	buffer = .5
 }
 intromsg ={
-	m= {"k", "i", "d", " ", "o", "r", "i", "o", "n", ","," ", "d", "o"," ", "y", "o", "u"," ", "r", "e","a", "d"," ", "m", "e", "?"  },
+	m= "kid orion, do you read me?",
+	mmax = 26,
 	mcount = 0,
 	timer=0,
 	buffer = 1
 }
 intromsg2 = {
-	m= {"t","h","i","s"," ","i","s"," ","b","a","b","y"," ","h","e","r","b","e","r","t"},
+	--m= {"t","h","i","s"," ","i","s"," ","b","a","b","y"," ","h","e","r","b","e","r","t"},
+	m = "this is baby herbert.",
+	mmax = 21,
 	mcount = 0,
 	timer=0,
 	buffer = 1
 }
 
 intromsg3 = {
-	m= {"i","'","m"," ","s","t","r","a","n","d","e","d"," ","i","n"," ","d","i","m","e","n","s","i","o","n"," ","z"},
+	m = "i'm stranded in dimension z",
+	mmax = 28,
 	mcount = 0,
 	timer=0,
 	buffer = 0.25
 }
 
 intromsg4 = {
-	m= {"i"," ","d","o","n","'","t"," ","h","a","v","e"," ","m","u","c","h"," ","t","i","m","e"," ","l","e","f","t","."},
+	--m= {"i"," ","d","o","n","'","t"," ","h","a","v","e"," ","m","u","c","h"," ","t","i","m","e"," ","l","e","f","t","."},
+	m = "i don't have much time left.",
+	mmax = 27,
 	mcount = 0,
 	timer=0,
 	buffer = 1
 }
 intromsg5 = {
-	m= {"h", "e","l","p"," ","m","e"," ","k","i","d"," ","o","r","i","o","n","!"},
+	--m= {"h", "e","l","p"," ","m","e"," ","k","i","d"," ","o","r","i","o","n","!"},
+	m = "help me kid orion!",
+	mmax = 18,
 	mcount = 0,
 	timer=0,
 	buffer = 1
@@ -183,7 +213,8 @@ g = {
 	gravity = 0.04,
 	backgroundcounter = 1,
 	timer = 0,
-	marktimer = 0
+	marktimer = 0,
+	srtimer = 0
 }
 level1={
 	origin = {x=0,y=0},
@@ -238,46 +269,54 @@ level5
 }
 pylon1 = {
 x = 6,
-y = 6,
-c = 1
+y = 6
 }
 pylon2 = {
 x=9,
-y=6,
-c=1
+y=6
 }
 pylon3 = {
 x=38,
-y=17,
-c=1
+y=17
 }
 pylon4 = {
 x=41,
-y=17,
-c=1
+y=17
 }
 pylon5 = {
 x = 10,
-y = 54,
-c = 1
+y = 54
 }
 pylon6 = {
 x = 5,
-y = 54,
-c = 1
+y = 54
+}
+pylon5a = {
+x = 35,
+y = 48
+}
+pylon6a = {
+x = 37,
+y = 48
 }
 pylon7 = {
 x = 58,
-y = 3,
-c = 1
+y = 3
 }
 pylon8 = {
 x = 62,
-y = 3,
-c = 1
+y = 3
+}
+pylon9 = {
+x = 118,
+y = 6
+}
+pylon10 = {
+x = 123,
+y = 6
 }
 pylons = {
-pylon1, pylon2, pylon3, pylon4, pylon5, pylon6, pylon7, pylon8
+pylon1, pylon2, pylon3, pylon4, pylon5, pylon6, pylon7, pylon5a, pylon6a,pylon8,pylon9,pylon10
 }
 
 gasblobs = {}
@@ -285,7 +324,7 @@ gasblobs = {}
 levelcounter = 1
 paltimer = 1
 clevel = levels[levelcounter]
-clevel = level1
+--clevel = level5
 
 function storeitem(tile,locx,locy)
 local item = {
@@ -314,19 +353,15 @@ mset(flr((x-clevel.offset.x)/8)+clevel.origin.x,flr((y-clevel.offset.y)/8)+cleve
 mset(x,y,t)
 end
 end
-function resetcamera()
-camera(0,0)
-end
+
 function lerp(a,b,t)
 	return (1-t)*a+t*b
 end
 
 function runtitlescreen()
 paltimer +=1
-	 if (btnp(4)) then
-	 	cls()
-	 	state = 1.5
-	 end
+	 if (btnp(4)) cls() state = 1.5
+	 
 
 	 -- add to string
 	 
@@ -339,19 +374,20 @@ local b=create_part(p.x+4,p.y+4, bullets, 100)
 			b.vel.x = cos(((truerot-90)/360)) * -1 * 3
    b.vel.y = (-1 * sin(((truerot-90)/360)) * 3)
    b.isbullet = true
-   p.energy = p.energy - 5 
+   p.energy -= 5
+   sfx(9) 
 end
 function checkinput()
 	if (levelcounter == 3) then
-		p.fuel = p.fuel - .01
+		p.fuel -= .01
 	end
 	if (btnp(4) and p.hascannon and p.energy > .25) then
 		firebullet()
 	end
 	if (btn(2) and p.fuel > 0 and p.energy > 0 or btn(5) and p.fuel > 0 and p.energy > 0) then
 				g.spritethruster = 28
-			p.fuel = p.fuel - p.fueldepleterate
-			p.energy = p.energy - .5
+			p.fuel -= p.fueldepleterate
+			p.energy -= .5
 			 
 		--	explode()
 			-- create x and y accel based on rotation
@@ -370,22 +406,18 @@ function checkinput()
 			p.energy += .5
 			end
 		g.spritethruster = 4
-			if not p.landed then
-				p.accel.y = g.gravity
-				p.accel.x = 0
-			end
+			if (not p.landed) p.accel.y = g.gravity p.accel.x = 0
+			
 		end
 	
 		if (btn(0)) then
 			--p.accel.x = -.01
-			if not p.landed then
-				p.rot += 0.03125
-			end
+			if (not p.landed) p.rot += 0.03125
+			
 		elseif (btn(1)) then
 			--p.accel.x = .01
-			if not p.landed then
-			p.rot -= .03125
-			end
+			if (not p.landed) p.rot -= .03125
+	
 		else
 			--p.accel.x = 0
 		end
@@ -403,8 +435,8 @@ function managemovement()
 		matched = false
 		
 		if not p.landed then
-			p.vel.x = p.vel.x + p.accel.x
-			p.vel.y = p.vel.y + p.accel.y
+			p.vel.x += p.accel.x
+			p.vel.y += p.accel.y
    
    if (p.vel.x^2 + p.vel.y^2) > p.maxvel^2 then
    	p.vel.x = oldvelx 
@@ -414,7 +446,7 @@ function managemovement()
 			
 			
 			if checkwall(newx, p.y) or checkwall(newx, p.y+1) or checkwall(newx, p.y+2) or checkwall(newx, p.y+3) or checkwall(newx, p.y+4) or checkwall(newx,p.y+5) or checkwall(newx,p.y+6) or checkwall(newx,p.y+7) or checkwall(newx+7, p.y) or checkwall(newx+7, p.y+1) or checkwall(newx+7, p.y+2) or checkwall(newx+7, p.y+3) or checkwall(newx+7, p.y+4) or checkwall(newx+7,p.y+5) or checkwall(newx+7,p.y+6) or checkwall(newx+7,p.y+7) then
-				p.vel.x = p.vel.x * -1 * p.bounce
+				p.vel.x *= -1 * p.bounce
 				matched = true
 				sfx(1)
 		
@@ -426,7 +458,7 @@ function managemovement()
 			newy = p.y + p.vel.y
 			if checkwall(p.x, newy) or checkwall(p.x +1, newy) or checkwall(p.x+2, newy) or checkwall(p.x+3, newy) or checkwall(p.x+4, newy) or checkwall(p.x+5,newy) or checkwall(p.x+6, newy) or checkwall(p.x+7, newy) or checkwall(p.x, newy+7) or checkwall(p.x +1, newy+7) or checkwall(p.x+2, newy+7) or checkwall(p.x+3, newy+7) or checkwall(p.x+4, newy+7) or checkwall(p.x+5,newy+7) or checkwall(p.x+6, newy+7) or checkwall(p.x+7, newy+7) then
 				matched = true
-				p.vel.y = p.vel.y * -1 * p.bounce	
+				p.vel.y *= -1 * p.bounce	
 				sfx(1)
 		
 		applydamage(sqrt(p.vel.x^2 + p.vel.y^2))
@@ -438,8 +470,8 @@ function managemovement()
 		
 		applydamage(sqrt(p.vel.x^2 + p.vel.y^2))
 		
-			p.vel.x = p.vel.x * -1 *p.bounce 
-			p.vel.y = p.vel.y * -1 * p.bounce
+			p.vel.x *= -1 * p.bounce 
+			p.vel.y *= -1 * p.bounce
 			end
 			if not matched and checkwall(p.x+7+p.vel.x, p.y+7+p.vel.y) or checkwall(p.x+7+p.vel.x, p.y+p.vel.y) or checkwall(p.x + p.vel.x, p.y + p.vel.y) or checkwall (p.x + p.vel.x, p.y+7 + p.vel.y) then		
 			
@@ -482,7 +514,17 @@ function limit()
 		p.energy = 50
 	end
 end
-
+function resetspaceram()
+spaceram.x = 75
+spaceram.y = -350
+spaceram.velx = 0
+spaceram.vely = 0
+spaceram.accelx = 0
+spaceram.accely = 0
+spaceram.mode = 1
+spaceram.health = 5
+spaceram.hurt = false
+end
 function create_star()
 
 local star = {}
@@ -510,11 +552,11 @@ add(dest,part)
 return part
 end
 
-function explode()
+function explode(locx,locy)
 -- create a bunch of particles
-
+	sfx(11)
  for i=1,16 do
-     np=create_part(p.x,p.y, parts, 100)
+     np=create_part(locx,locy, parts, 100)
       
      np.vel.x = cos(i/16)*2
      np.vel.y = sin(i/16)*2
@@ -532,11 +574,13 @@ function animatepylons()
 mset(6,6,53)
 for py in all(pylons) do
 
-mset(py.x,py.y,51+flr(py.c))
+mset(py.x,py.y,51+flr(pyc))
 
-py.c +=.1
-py.c = py.c % 3
+--py.c +=.1
+--py.c = py.c % 3
 end
+pyc += .1
+pyc = pyc % 3
 end
 function _update()
 	g.timer += .1
@@ -581,6 +625,9 @@ function _update()
 		foreach(scorebursts, move_part)
 		foreach(gasblobs, move_part)
 		foreach(bullets, move_part)
+		if levelcounter == 5 then
+		updatespaceram()
+		end
 		if p.canmove then
 		
 			if levelcounter == 4 then
@@ -598,8 +645,8 @@ function _update()
 		elseif p.atgoal then 
 			if p.fuel >= 0 then
 				if (flr(g.timer*5) % 2 == 0) then
-					p.fuel = p.fuel - 1
-					p.score = p.score + 10
+					p.fuel -= 1
+					p.score += 10
 					sfx(6)
 						if (flr(g.timer*5) % 4 == 0) then
 					local sb = create_part(p.x-4,p.y-4, scorebursts, 45)
@@ -614,8 +661,8 @@ function _update()
 				end
 			elseif p.energy >= 0 then
 				if (flr(g.timer*5) % 2 == 0) then
-					p.energy = p.energy - 2
-					p.score = p.score + 2
+					p.energy -= 2
+					p.score += 2
 					sfx(8)
 						if (flr(g.timer*5) % 4 == 0) then
 					local sb = create_part(p.x-4,p.y-4, scorebursts, 45)
@@ -629,8 +676,8 @@ function _update()
 				end
 			elseif p.health >= 0 then
 				if (flr(g.timer*5) % 2 == 0) then
-					p.health = p.health - 1
-					p.score = p.score + 10
+					p.health -= 1
+					p.score += 10
 					if (flr(g.timer*5) % 4 == 0) then
 					local sb = create_part(p.x-4,p.y-4, scorebursts, 45)
 		sb.vel.x = cos(rnd(10)/10)*3
@@ -654,7 +701,7 @@ function _update()
 		p.dead = true
 		g.marktimer = g.timer
 			if p.fuel >= 0 then
-				explode()
+				explode(p.x,p.y)
 			else
 			-- fuel out
 			end
@@ -666,7 +713,8 @@ function _update()
 		end
 	end
 	if state == 2.5 then
-	resetcamera()	
+	camera(0,0)
+	
 	if (btnp(4)) then
 	 	cls()
 	 	resetplayer()
@@ -685,8 +733,8 @@ end
 function move_star(st)
 
 st.vel = {x = p.vel.x*.05, y = p.vel.y*.05}
-st.rx = (st.rx + st.vel.x)
-st.ry = (st.ry + st.vel.y)
+st.rx += st.vel.x
+st.ry += st.vel.y
 if abs(st.rx - flr(st.rx)) <= 0.5 then
 st.x = flr(st.rx)
 else
@@ -710,30 +758,35 @@ del (gasblobs, pt)
 del (bullets, pt)
 end
 
-pt.x = pt.x + pt.vel.x
-pt.y = pt.y + pt.vel.y
+pt.x += pt.vel.x
+pt.y += pt.vel.y
 -- slow down vels here
 --pt.vel.x *= .98
 --pt.vel.y *= .98
-pt.t = pt.t + 1
+pt.t += 1
 
 if pt.isbullet then
 	local itemtile = getsprite(pt.x,pt.y)
 	if itemtile == 47 then
 	cleartile(pt.x, pt.y)
+	sfx(10)
 	del (bullets, pt)
-	else if fget(itemtile,7) then
+	elseif fget(itemtile,7) then
 	del (bullets, pt)
+	elseif spaceram.health > 0 and pt.x > spaceram.x and pt.x < spaceram.x+16 and pt.y > spaceram.y and pt.y < spaceram.y + 16 then
+	del (bullets, pt)
+	spaceram.health -= 1
+	sfx(12)
+	spaceram.hurt = true
+	if spaceram.health == 0 then
+	explode(spaceram.x, spaceram.y)
 	end
 end
 end
 end
 function draw_bullets(b)
-pset(b.x, b.y,7)
-pset(b.x+1,b.y,7)
-pset(b.x-1,b.y,7)
-pset(b.x,b.y-1,7)
-pset(b.x,b.y+1,7)
+line(b.x-1,b.y,b.x+1,b.y,7)
+line(b.x,b.y-1,b.x,b.y+1,7)
 end
 function draw_gbs(gb)
 pset(gb.x, gb.y,3)
@@ -764,6 +817,7 @@ end
 function loselife()
 p.lives -= 1
 restoreitems()
+resetspaceram()
 	if p.lives < 0 then
 		gameover()
 	else
@@ -801,7 +855,7 @@ for i=1,30 do
 end
 function nextlevel()
 resetmsgs()
-resetcamera()
+camera(0,0)
 resetplayer()
 restoreitems()
 clearcache()
@@ -846,6 +900,7 @@ p.atgoal = false
 p.canmove = true
 p.hasitem = false
 p.hascannon = false
+
 end
 
 function resetmsgs()
@@ -859,6 +914,7 @@ end
 end
 function restart()
 resetplayer()
+resetspaceram()
 state = 1
 p.lives = 3
 levelcounter = 1
@@ -887,7 +943,12 @@ end
 function applydamage(mag)
 	if abs(mag) > p.damagethreshold then
 		p.health = p.health - mag * p.collfactor
+		
 	end
+	if abs(mag) > 1.2 then
+	sfx(13)
+	end
+	
 	
 end
 function cleartile(x, y)
@@ -909,6 +970,7 @@ function checkitem(x, y)
 		p.hascannon = true
 		storeitem(itemtile,x,y)
 		cleartile(x,y)
+		sfx(2)
 	end
 	if (fget(itemtile,6))then -- gas
 		--set space to empty
@@ -1049,7 +1111,7 @@ function runmessage(msgcol)
  local mk = msgcol.marker
  local msg = msgcol.msgs[mk]
 	if msg then
-	local scursor = flr((128 - (#msg.m * 4.25))/2)
+	local scursor = flr((128 - (msg.mmax * 4.25))/2)
  --local scursor =4
 	if mk == 1 and msg.mcount == 1 then
 		rectfill(0,38,128,82,6)
@@ -1062,16 +1124,16 @@ function runmessage(msgcol)
 --end)
 	msg.timer = msg.timer +1
 	if (msg.timer % 3 == 0) then
-		cursor(scursor + msg.mcount*4,58)
-		if (not not msg.m[msg.mcount]) then
-			print(msg.m[msg.mcount])
+		--cursor(scursor + msg.mcount*4,58)
+		if (msg.mcount<msg.mmax) then
+			print(msg.m)
 			--print(#msgcol.msgs)
 			sfx(3)
 		end
 		msg.mcount = msg.mcount + 1
 
 	end
-	if msg.mcount >= #msg.m + 30*msg.buffer then
+	if msg.mcount >= msg.mmax + 30*msg.buffer then
 		cls()
 		rectfill(0,38,128,82,6)
 				rectfill(2,40,125,80,3)
@@ -1091,6 +1153,7 @@ function runmessage(msgcol)
 end
 
 function drawhud()
+
 	rectfill(cam.x, 128-58+cam.y, cam.x +16, cam.y+128, 0)
 		cursor(1+cam.x, 128-56+cam.y)
 		color(3)
@@ -1111,6 +1174,7 @@ function drawhud()
 		print(scorestring)
 		else
 		print("score:")
+		--print(spaceram.accelx)
 		end
 		cursor(cam.x+124, cam.y)
 		print("0")
@@ -1301,10 +1365,130 @@ function _draw()
 	 --pset(p.x+8, p.y+8, 15)
 	 foreach(parts,draw_part)
 	 foreach(scorebursts,draw_sbs)
+	 if levelcounter == 5 then
+	 drawspaceram()
+	 end
 	 drawhud()
 	end
 	
 end
+
+
+function updatespaceram()
+	if spaceram.health > 0 then
+	spaceram.velx += spaceram.accelx
+	spaceram.vely += spaceram.accely
+	
+	if spaceram.velx > 1 then 
+		spaceram.velx = 1
+		end
+		if spaceram.velx < -1 then 
+		spaceram.velx = -1
+		end
+		if spaceram.vely > 1 then 
+		spaceram.vely = 1
+		end
+		if spaceram.vely < -1 then 
+		spaceram.vely = -1
+		end
+	--spaceram.velx = 1 + spaceram.accelx
+	spaceram.x += spaceram.velx
+	spaceram.y += spaceram.vely
+--check for collision with player
+if abs((spaceram.x + 8)-(p.x + 4)) < 12 and abs((spaceram.y + 8)-(p.y + 4)) < 12 then
+--compare positions
+sfx(13)
+if spaceram.x + 8 > p.x + 4 then
+p.vel.x = -3
+else 
+p.vel.x = 3
+end
+
+if spaceram.y + 8 > p.y + 4 then
+p.vel.y = -3
+else 
+p.vel.y = 3
+end
+
+end
+	local dist = abs(p.x +4 - spaceram.x+8) + abs(p.y+4 - spaceram.y+8)
+	local disttohome = abs(75 - spaceram.x+8) + abs(-350 - spaceram.y+8)
+	local targetx
+	local targety
+if dist < 100 then
+spaceram.mode = 1
+targetx = p.x
+targety = p.y
+elseif disttohome > 100 then
+spaceram.mode = 1
+targetx = 75
+targety = -350
+else 
+spaceram.mode = 2
+end
+
+	 -- seek
+	 if (spaceram.mode == 1) then
+	 if spaceram.x > targetx then
+	 spaceram.accelx = -.03
+	 --spaceram.velx = 2
+	 else 
+	 spaceram.accelx = .03
+	 end	
+	 
+	 if spaceram.y > targety then
+	 spaceram.accely = -.04
+	 --spaceram.velx = 2
+	 else 
+	 spaceram.accely = .04
+	 end	
+	
+	
+	
+	else
+	
+	--local ch1 = flr(rnd(3))-1
+	--local ch2 = flr(rnd(3))-1
+	
+	spaceram.accelx = 0
+	spaceram.accely = 0
+		if g.timer - g.srtimer >= 2 then
+		--spaceram.accelx = ch1 * rnd(.005)
+		--spaceram.accely = ch2 * rnd(.005)
+  spaceram.velx=cos(g.timer)/5
+  spaceram.vely=cos(g.timer)/5
+  g.srtimer = g.timer	
+
+	end
+	end
+ 	-- if spaceram is near player, move toward him
+ 	-- otherwise, if spaceram is too far from original location, head back
+ 	-- otherwise, wander randomly 
+end
+end
+function drawspaceram()
+local sprite = 66
+if spaceram.hurt then
+sprite = 108
+end
+if spaceram.health > 0 then
+if spaceram.mode == 1 then
+if spaceram.accelx < 0 then
+	spr(sprite,spaceram.x, spaceram.y,2,2, true)
+else
+ spr(sprite,spaceram.x, spaceram.y,2,2)
+end
+else
+if spaceram.velx < 0 then
+	spr(sprite,spaceram.x, spaceram.y,2,2, true)
+else
+ spr(sprite,spaceram.x, spaceram.y,2,2)
+end
+end
+end
+spaceram.hurt = false
+end
+
 
 function generaterank(finalscore)
 
@@ -1332,21 +1516,21 @@ if levelcounter == 1 and p.canmove then
 	 	cursor(15,-90)
 	 	print("extra fuel")
 	 	
-	 	cursor(120,-126)
-	 	color(13)
-	 	print("gems are") 
-	 	cursor(120,-120)
-	 	print("bonus points")
+	-- 	cursor(120,-126)
+	-- 	color(13)
+	-- 	print("gems are") 
+	 --	cursor(120,-120)
+	-- 	print("bonus points")
 	 	
-	 	cursor(44,-180)
-	 	print("get energy") 
-	 	cursor(48,-174)
-	 	print("to boost")
+	 --	cursor(44,-180)
+	 --	print("get energy") 
+	 --	cursor(48,-174)
+	 --	print("to boost")
 	 	
-	 	cursor(50,-300)
-	 	print("land to") 
-	 	cursor(50,-294)
-	 	print("advamce")
+	 --	cursor(50,-300)
+	 	--print("land to") 
+	 	--cursor(50,-294)
+	 	--print("advamce")
 	 	
 	 
 	 end   
@@ -1400,22 +1584,22 @@ __gfx__
 00000000000000000000eee00cccc770008788787877788000000000000000000000000000000000000000000000000000000000000000000000000000000000
 000000000000000000000e00000cccc0008888888888888000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-00000000000000000000000000000000000999999999900999999999900999999999009999999999000099999000099000006666666600000000000000000000
-00000000000000000000000000000000009888888888890988888888890988888889098888888888900988888900988900066555666660000000000000000000
-00000000000000000000000000000000009888888888890988888888890988888889098888888888909888888890988900665666566666000000000000000000
-00000000000000000000000000000000009888999988890988999988890099888990098889999888909888988890988906656666656666000000000000000000
-00000000000000000000000000000000009889000098890989000098890009888900098890000988909889098890988966566555666666600000000000000000
-00000000000000000000000000000000009889000098890989000098890009888900098890000988909889098890988966566565566777660000000000000000
-00000000000000000000000000000000009889000098890989000098890009888900098890000988909889098890988966566566566666660000000000000000
-00000000000000000000000000000000009889000098890988999988890009888900098890000988909889098890988906566666566666600000000000000000
-00666600006666000000000000000000009889000098890988888888890009888900098890000988909889098890988966656665665666600000000000000000
-06ddad6006ddad600000000000000000009889000098890988888888900009888900098890000988909889098890988966665556655566600000000000000000
-6ddddad66ddddad60000000000000000009889000098890988999988890009888900098890000988909889098890988966666666555500000000000000000000
-6ddddad66ddddad60000000000000000009889000098890988900098890009888900098890000988909889098890988900655665555500000000000000000000
-66dddd6666dddd660000000000000000009888999988890988900098890099888990098889999888909889098889888900665555555566000000000000000000
-66dddd6666dddd660000000000000000009888888888890988900098890988888889098888888888909889098888888900006660055556600000000000000000
-606666066066660600000000136161f3009888888888890988900098890988888889098888888888909889009888889000000600000555500000000000000000
-60600606606006066060606000000000000999999999900999000099900999999999009999999999000990000999990000000000000000000000000000000000
+00000000000000000000777777770000000999999999900999999999900999999999009999999999000099999000099000006666666600000000000000000000
+00000000000000000007755577777000009888888888890988888888890988888889098888888888900988888900988900066555666660000000000000000000
+00000000000000000077577757777700009888888888890988888888890988888889098888888888909888888890988900665666566666000000000000000000
+00000000000000000775777775777e00009888999988890988999988890099888990098889999888909888988890988906656666656666000000000000000000
+00000000000000007757755577eeeee0009889000098890989000098890009888900098890000988909889098890988966566555666666600000000000000000
+00000000000000007757757557e777ee009889000098890989000098890009888900098890000988909889098890988966566565566777660000000000000000
+00000000000000007757757757eeeeee009889000098890989000098890009888900098890000988909889098890988966566566566666660000000000000000
+00000000000000000757777757eeeee0009889000098890988999988890009888900098890000988909889098890988906566666566666600000000000000000
+0066660000666600e775777577ce7770009889000098890988888888890009888900098890000988909889098890988966656665665666600000000000000000
+06ddad6006ddad60ec7755577ccc7770009889000098890988888888900009888900098890000988909889098890988966665556655566600000000000000000
+6ddddad66ddddad6eec77777cccc0000009889000098890988999988890009888900098890000988909889098890988966666666555500000000000000000000
+6ddddad66ddddad600ecc77ccccc7770009889000098890988900098890009888900098890000988909889098890988900655665555500000000000000000000
+66dddd6666dddd6600eeccccccccccc0009888999988890988900098890099888990098889999888909889098889888900665555555566000000000000000000
+66dddd6666dddd660000eee0000cccc0009888888888890988900098890988888889098888888888909889098888888900006660055556600000000000000000
+606666066066660600000e0000000000009888888888890988900098890988888889098888888888909889009888889000000600000555500000000000000000
+60600606606006060000000000000000000999999999900999000099900999999999009999999999000990000999990000000000000000000000000000000000
 a02323131313131323232323131313f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3a0b1131313131313
 131313131391131391131313131313a0a0131313131313131313001313c213131313131313131313131313131313131313131313131313131313131313138181
 a023231313131313232323232323f3f3131313f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3f3a0b1b11313131313
@@ -1495,8 +1679,8 @@ __map__
 0a31313131313131313131313131310a61013131323232320a3100320a311731310a3232323232323232323232323232323232323232320a0a3f3131313f3f183131313131313131181818181818180a0a16162c2c2c313131313131313131312c2c2c2c2c2c2c2c31313131313131313131313131311c1c1c1c1c1c1010312c
 0a31313131313131313131313131310a20613131313232310a3100320a0a0a32310a3232323232323232323232323232323232323232320a0a3f0d31313131313131313131313131311818181818180a0a16162c2c2c2c2c3131313131313131312c2c2c2c2c2c2c2c31313131313131313131313131313131313c000010312c
 0a31163131313131313131313108310a20613131313232310a31003231313132310a3232323232323232323232323232323232323232320a0a183f32313131313131313131313131313f3f3f3f3f180a0a1616312c2c2c2c31313131313131313131312c2c2c2c2c2c3131313131313131313c3131313131313110000031312c
-0a0a0a0a31313131313131310a0a0a0a20313131313232310a31003231313132310a3232323232323232323232323232323232313232320a0a18183f32313131313131313131313131313131313f180a0a313131312c2c2c3131313131313131313131312c2c2c2c2c31313131314243313131313d3132313131313d0031312c
-3f3f3f3f31313131313131313f3f3f3f31013232323232310a31000a0a0a0a0a0a0a3131323232323232323232323232323232323232320a0a1818183f313131313131313131313131313131313f180a0a31313131312c2c2c2c313131313131313131312c2c2c2c3131313131315253313131313131313d313131000031312c
+0a0a0a0a31313131313131310a0a0a0a20313131313232310a31003231313132310a3232323232323232323232323232323232313232320a0a18183f32313131313131313131313131313131313f180a0a313131312c2c2c3131313131313131313131312c2c2c2c2c31313131313131313131313d3132313131313d0031312c
+3f3f3f3f31313131313131313f3f3f3f31013232323232310a31000a0a0a0a0a0a0a3131323232323232323232323232323232323232320a0a1818183f313131313131313131313131313131313f180a0a31313131312c2c2c2c313131313131313131312c2c2c2c3131313131313131313131313131313d313131000031312c
 3f3f3f3f31313131313131313f3f3f3f31013232323232310a310a0a3132323232323131313f3f05053f3f3232323232323232313232320a0a18181831313131313131313131313131313108313f180a0a2f2f2f2f2f2f2f2c19313131312c31313131312c2c2c2c31313131313c31313131313131313110313131000031312c
 3f3f3f3f00313131313131313f3f3f3f31013232323232320a0a0a0a3132323232323132323f323232313f3232323232323232313132320a0a1818313131313131310a0a3131313131313f3f3f3f180a0a313131313131313119313131312c31313131312c2c2c31313131313131313131313c3131313110313d313d3131312c
 3f3f3f3f00000731310731313f3f3f3f01013232323232320a0a0a313132323232323132323f313232313f3232323232323232323132320a0a183131310731313131313131313131313118181818180a0a313131313131313119310d07312c313131312c2c2c313131313131313131313131313131313110103131003131312c
@@ -1526,11 +1710,11 @@ __sfx__
 011900001c7751c7051c7051c7051c7051c7051c7051c7051c7051c7051c7051c7051c7051c7051c7051c7051f7051f7051f7051f7051f7051f7051d7051d7051d7051d7051d7051d7051d7051d7051d7051d705
 001000001707016070150700000000000000000000000000000002600026000280002a00028000280002800028000280002800028000280000000000000000000000000000000000000000000000000000000000
 011600371f7750f7050f7050f7050d7050f7050d7050f7050d7050f7051a705187051a7051c7051c7051d7051f7051f70524705247050d70518705247051a7050070500705007050070500705007050070500705
-001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+011000002d7732d7032d7032d7032d7032d7032d7032d7031c7032d7032d703044052d7032d7032d7032d7032d7032d7032d7032d7032d7032d7032d7032d7032d7032d7032d7032d7032d7032d7032d7032d703
+011d000004473002030050300603005030060324603006030050302503004030e0031c00310003104030440304403044030440304403044030440304403044030440304403044030440304403044030440309603
+01120000154731347311473104730e4730747305473034530345303433034130340303403104051040511403114051140611403114030340310403104030c403004050240500402024020440304403024010b403
+0010000011453004030c4030c40310403104031140311403114031140311403114030000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0010000011453104230c4130000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 0110000010003150731300310073000030e073110730000310073000030000315073000030000300003100730000315073000030000300003100730000300003000031507300003000031007310073000030e073
 001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

@@ -83,8 +83,8 @@ sps = {sp1, sp2}
 
 cam = {
 	x = 64,
-	y = 64,	last = {x = 64, y=64},
-	count = 0
+	y = 64
+	--count = 0
 }
 --journeymsg = {
 --m= {"y","e","a","a","a","!"  },
@@ -121,7 +121,7 @@ mmax = 8,
 spiralmsg2 = {
 --m= {"y","o","u","r"," ","f","u","e","l"," ","t","a","n","k"," ","i","s"," ","l","e","a","k","i","n","g","!"  },
 	m = "your fuel tank is leaking!",
-	mmax = 26,
+	mmax = 24,
 	mcount = 0,
 	timer=0,
 buffer = 1
@@ -130,7 +130,7 @@ buffer = 1
 
 climbmsg2 = {
 m= "gravity is twice as strong",	
-mmax = 26,
+mmax = 24,
 mcount = 0,
 	timer=0,
 	buffer = .1
@@ -144,7 +144,7 @@ m = "on this planet!",
 }
 intromsg ={
 	m= "kid orion, do you read me?",
-	mmax = 26,
+	mmax = 25,
 	mcount = 0,
 	timer=0,
 	buffer = 1
@@ -160,7 +160,7 @@ intromsg2 = {
 
 intromsg3 = {
 	m = "i'm stranded in dimension z",
-	mmax = 28,
+	mmax = 25,
 	mcount = 0,
 	timer=0,
 	buffer = 0.25
@@ -321,10 +321,10 @@ pylon1, pylon2, pylon3, pylon4, pylon5, pylon6, pylon7, pylon5a, pylon6a,pylon8,
 
 gasblobs = {}
 
-levelcounter = 1
+levelcounter = 5
 paltimer = 1
 clevel = levels[levelcounter]
---clevel = level5
+clevel = level5
 
 function storeitem(tile,locx,locy)
 local item = {
@@ -354,9 +354,7 @@ mset(x,y,t)
 end
 end
 
-function lerp(a,b,t)
-	return (1-t)*a+t*b
-end
+
 
 function runtitlescreen()
 paltimer +=1
@@ -629,9 +627,12 @@ function _update()
 		updatespaceram()
 		end
 		if p.canmove then
-		
+			
+			if g.timer > g.marktimer + 20 then
+			cannonmsg = false
+			end
 			if levelcounter == 4 then
-				g.gravity = 0.09
+				 g.gravity = 0.09
 			else
 				g.gravity = 0.04
 			end
@@ -942,7 +943,7 @@ checkitem(p.x+8, p.y+8)
 end
 function applydamage(mag)
 	if abs(mag) > p.damagethreshold then
-		p.health = p.health - mag * p.collfactor
+		p.health -= mag * p.collfactor
 		
 	end
 	if abs(mag) > 1.2 then
@@ -968,6 +969,8 @@ function checkitem(x, y)
 	
 	if itemtile == 18 then
 		p.hascannon = true
+		cannonmsg = true
+		g.marktimer = g.timer
 		storeitem(itemtile,x,y)
 		cleartile(x,y)
 		sfx(2)
@@ -978,7 +981,7 @@ function checkitem(x, y)
 		cleartile(x,y)
 	
 		if p.fuel <= 40 then
-		p.fuel = p.fuel + 10
+		p.fuel += 10
 		else
 		p.fuel = 50
 		end
@@ -996,7 +999,7 @@ function checkitem(x, y)
 		cleartile(x,y)
 		
 		if p.health <= 40 then
-			p.health = p.health + 10
+			p.health += 10
 		else
 			p.health = 50
 		end
@@ -1012,7 +1015,7 @@ function checkitem(x, y)
 		storeitem(itemtile,x,y)
 		cleartile(x,y)
 		if p.energy <= 40 then
-			p.energy = p.energy + 10
+			p.energy += 10
 		else
 			p.energy = 50
 		end
@@ -1130,7 +1133,7 @@ function runmessage(msgcol)
 			--print(#msgcol.msgs)
 			sfx(3)
 		end
-		msg.mcount = msg.mcount + 1
+		msg.mcount += 1
 
 	end
 	if msg.mcount >= msg.mmax + 30*msg.buffer then
@@ -1266,7 +1269,7 @@ function _draw()
 	 	cam.y = 0
 	 	drawbg()
 	 	color(2 + g.timer % 11)
-	 	g.timer = g.timer + .3
+	 	g.timer += .3
 	 	cursor(38,24)
 	 	print ("congratulations!")
 	 	if g.timer - g.marktimer > 10 then
@@ -1314,15 +1317,12 @@ function _draw()
 	 end
 	if state == 2 then
 						
-			cam.x = p.x -64	
+			cam.x = p.x - 64	
 			cam.y = p.y - 64
 			
 			camera(cam.x,cam.y)--rectfill(0,0,128,128,0)
 			
 			
-			
-		
-	
 		cls()
 		
 
@@ -1361,6 +1361,16 @@ function _draw()
 	 	print ("fuel out")
 	 
 	 end
+	 if cannonmsg then
+	 	 	color(8)
+	 	rectfill(22+cam.x, 32+cam.y, 104+cam.x, 36+cam.y)
+	 	
+	 	cursor(cam.x+22,32+cam.y)
+	 	
+	 	color(7)
+	 	
+	 	print ("use z to fire cannon!")
+	 end
 	 --pset(p.x, p.y, 15)
 	 --pset(p.x+8, p.y+8, 15)
 	 foreach(parts,draw_part)
@@ -1395,7 +1405,7 @@ function updatespaceram()
 	spaceram.x += spaceram.velx
 	spaceram.y += spaceram.vely
 --check for collision with player
-if abs((spaceram.x + 8)-(p.x + 4)) < 12 and abs((spaceram.y + 8)-(p.y + 4)) < 12 then
+if abs((spaceram.x + 8)-(p.x + 4)) < 12 and not p.dead and abs((spaceram.y + 8)-(p.y + 4)) < 12 then
 --compare positions
 sfx(13)
 if spaceram.x + 8 > p.x + 4 then

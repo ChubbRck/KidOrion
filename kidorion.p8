@@ -1,7 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 4
 __lua__
-state = 10
+state = 1
 p = {
 	accel = {x = 0, y = 0},
 	x = 60, --64,
@@ -11,7 +11,7 @@ p = {
 	baseaccel = .1, -- was .1
 	vel = {x = 0, y = 0},
 	bounce = 0.4 ,
-	score = 1000,
+	score = 0,
 	landingthreshold = 0.5,
 	maxvel = 3, -- was 2
 	rot = 0,

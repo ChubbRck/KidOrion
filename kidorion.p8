@@ -102,7 +102,7 @@ cam = {
 --	timer=0,
 --	buffer = 1
 --}
-
+oldsprite = 98
 finalmsg = {
 
 	m = "beware the space ram!",
@@ -1485,18 +1485,25 @@ end
 end
 function drawspaceram()
 spaceramcounter += 1
-if spaceramcounter % 60 == 0 then
+
+if spaceram.hurt then
+oldsprite = spaceramsprite
+spaceramsprite = 108
+else 
+spaceramsprite = oldsprite
+if spaceramcounter % 30 == 0 then
 
 local chance = rnd(100)
 
 if chance < 50 then
 spaceramsprite = 98
+oldsprite = 98
 else
 spaceramsprite = 66
+oldsprite = 66
 end
 end
-if spaceram.hurt then
-spaceramsprite = 108
+
 end
 if spaceram.health > 0 then
 if spaceram.mode == 1 then

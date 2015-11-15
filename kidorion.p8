@@ -270,56 +270,62 @@ level3,
 level4,
 level5
 }
-pylon1 = {
-x = 6,
-y = 6
-}
-pylon2 = {
-x=9,
-y=6
-}
-pylon3 = {
-x=38,
-y=17
-}
-pylon4 = {
-x=41,
-y=17
-}
-pylon5 = {
-x = 10,
-y = 54
-}
-pylon6 = {
-x = 5,
-y = 54
-}
-pylon5a = {
-x = 35,
-y = 48
-}
-pylon6a = {
-x = 37,
-y = 48
-}
-pylon7 = {
-x = 58,
-y = 3
-}
-pylon8 = {
-x = 62,
-y = 3
-}
-pylon9 = {
-x = 118,
-y = 6
-}
-pylon10 = {
-x = 123,
-y = 6
-}
+--pylon1 = {
+--x = 6,
+--y = 6
+--}
+--pylon2 = {
+--x=9,
+--y=6
+--}
+--pylon3 = {
+--x=38,
+--y=17
+--}
+--pylon4 = {
+--x=41,
+--y=17
+--}
+--pylon5 = {
+--x = 10,
+--y = 54
+--}
+--pylon6 = {
+--x = 5,
+--y = 54
+--}
+--pylon5a = {
+--x = 35,
+--y = 48
+--}
+--pylon6a = {
+--x = 37,
+--y = 48
+--}
+--pylon7 = {
+--x = 58,
+--y = 3
+--}
+--pylon8 = {
+--x = 62,
+--y = 3
+--}
+--pylon9 = {
+--x = 118,
+--y = 6
+--}
+--pylon10 = {
+--x = 123,
+--y = 6
+--}
 pylons = {
-pylon1, pylon2, pylon3, pylon4, pylon5, pylon6, pylon7, pylon5a, pylon6a,pylon8,pylon9,pylon10
+{x=6,y=6}, {x=123,y=6},
+{x=9,y=6},{x=38,y=17},
+{x=41,y=17},{x=10,y=54},
+{x=5,y=54}, {x=58,y=3},
+{x=35,y=48},{x=37,y=48},
+{x=37,y=48},{x=62,y=3},
+{x=118,y=6}
 }
 
 gasblobs = {}
@@ -327,7 +333,7 @@ gasblobs = {}
 levelcounter = 1
 paltimer = 1
 clevel = levels[levelcounter]
-
+--clevel = level5
 
 function storeitem(tile,locx,locy)
 local item = {
@@ -804,6 +810,13 @@ if pt.isbullet then
 	spaceram.hurt = true
 	if spaceram.health == 0 then
 	explode(spaceram.x, spaceram.y)
+	p.score = p.score + 2000/10
+		local sb = create_part(spaceram.x,spaceram.y, scorebursts, 45)
+		sb.vel.x = 1
+		sb.vel.y = 1
+		sb.val=2000
+
+	
 	end
 end
 end

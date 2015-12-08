@@ -993,7 +993,7 @@ end
 function applydamage(mag)
 	if abs(mag) > p.damagethreshold then
 		p.health -= mag * p.collfactor
-		for i=1,10 do
+		for i=1,(mag*5) do
 		local sp = create_part(p.x+4,p.y+4, sparks, 50)
 			sp.vel.y = rnd(mag)-mag/2
 			sp.vel.x = rnd(mag)-mag/2

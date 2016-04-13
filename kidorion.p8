@@ -186,7 +186,7 @@ intromsg5 = {
 }
 
 intromsgs = {
-msgs = {intromsg, intromsg2, intromsg3,intromsg4 intromsg5},
+msgs = {intromsg, intromsg2, intromsg3,intromsg4, intromsg5},
 marker = 1
 }
 

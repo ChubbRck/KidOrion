@@ -151,14 +151,14 @@ intromsg ={
 	timer=0,
 	buffer = 1
 }
---intromsg2 = {
+intromsg2 = {
 	--m= {"t","h","i","s"," ","i","s"," ","b","a","b","y"," ","h","e","r","b","e","r","t"},
---	m = "this is baby herbert.",
---	mmax = 21,
---	mcount = 0,
---	timer=0,
---	buffer = 1
---}
+	m = "this is baby herbert.",
+	mmax = 21,
+	mcount = 0,
+	timer=0,
+	buffer = 1
+}
 
 intromsg3 = {
 	m = "i'm stranded in dimension z",
@@ -168,14 +168,14 @@ intromsg3 = {
 	buffer = 0.25
 }
 
---intromsg4 = {
+intromsg4 = {
 	--m= {"i"," ","d","o","n","'","t"," ","h","a","v","e"," ","m","u","c","h"," ","t","i","m","e"," ","l","e","f","t","."},
---	m = "i don't have much time left.",
---	mmax = 27,
---	mcount = 0,
---	timer=0,
---	buffer = 1
---}
+	m = "i don't have much time left.",
+	mmax = 27,
+	mcount = 0,
+	timer=0,
+	buffer = 1
+}
 intromsg5 = {
 	--m= {"h", "e","l","p"," ","m","e"," ","k","i","d"," ","o","r","i","o","n","!"},
 	m = "help me kid orion!",
@@ -186,7 +186,7 @@ intromsg5 = {
 }
 
 intromsgs = {
-msgs = {intromsg, intromsg3, intromsg5},
+msgs = {intromsg, intromsg2, intromsg3,intromsg4 intromsg5},
 marker = 1
 }
 
